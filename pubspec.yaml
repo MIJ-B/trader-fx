@@ -1,5 +1,6 @@
-name: trader_fx  
-description: A Flutter trading analysis application
+name: trader_fx
+description: Application d'analyse de trades avec persistance des données
+
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -9,13 +10,31 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.18.0
-  cupertino_icons: ^1.0.2
+  
+  # Base de données locale
+  sqflite: ^2.3.0
+  path_provider: ^2.1.1
+  path: ^1.8.3
+  
+  # Graphiques
+  fl_chart: ^0.65.0
+  
+  # Date formatting
+  intl: ^0.18.1
+  
+  # File picking pour backup/restore
+  file_picker: ^6.1.1
+  
+  # Permissions
+  permission_handler: ^11.1.0
+  
+  # Share files
+  share_plus: ^7.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
