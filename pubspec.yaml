@@ -1,4 +1,4 @@
-name: trader-fx   # Ovay ity (tsy trader-fx)
+name: trader_fx  
 description: A Flutter trading analysis application
 publish_to: 'none'
 version: 1.0.0+1
