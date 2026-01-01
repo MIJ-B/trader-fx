@@ -1,0 +1,62 @@
+name: Web Test & Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: ☕ Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+
+    - name: 🐦 Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.0'
+        channel: 'stable'
+
+    - name: 🚫 Disable analytics
+      run: flutter config --no-analytics
+
+    - name: 🌐 Enable Flutter Web
+      run: flutter config --enable-web
+
+    - name: 🎯 Create web platform files
+      run: flutter create . --platforms=web
+
+    - name: 📦 Get dependencies
+      run: flutter pub get
+
+    - name: 🔍 Analyze code
+      run: flutter analyze --no-fatal-infos
+      continue-on-error: true
+
+    - name: 🏗️ Build web (release)
+      run: flutter build web --release --web-renderer html --base-href /trader-fx/
+
+    - name: 📝 Add .nojekyll file
+      run: touch build/web/.nojekyll
+
+    - name: 🚀 Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/web
+        force_orphan: true
