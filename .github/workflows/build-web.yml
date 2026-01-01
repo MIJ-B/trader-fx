@@ -48,7 +48,7 @@ jobs:
       continue-on-error: true
 
     - name: 🏗️ Build web (release)
-      run: flutter build web --release --web-renderer html --base-href /trader-fx/
+      run: flutter build web --release --web-renderer html --base-href /trader_fx/
 
     - name: 📝 Add .nojekyll file
       run: touch build/web/.nojekyll
